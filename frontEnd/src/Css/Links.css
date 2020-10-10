@@ -1,0 +1,15 @@
+.STYLE_LINK {
+    color: 'black';
+    
+    
+}
+
+.STYLE_LINK a{
+    text-decoration: 'none',
+}
+
+.STYLE_LINK a:hover{
+    text-decoration: underline; 
+    color: '#f00';
+}
+
