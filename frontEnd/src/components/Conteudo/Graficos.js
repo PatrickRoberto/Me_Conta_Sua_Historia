@@ -2,13 +2,17 @@ import React from 'react'
 import Contador from '../Contadores/Contador'
 import GraficoEspaco from '../Graficos/GraficoEspaco'
 
-export default function Graficos() {
+export default function Graficos({relatos}) {
+
+    const ValueContadorCasos = relatos.length;
+    const ValueCon = relatos.length;
+    
+
     return (
         <div style={STYLE}>
             <div style={STYLE_CONTADORES}>
-                <Contador value='0' texto="Quantidade de Relatos"/>
-                <Contador value='0' texto="Relatos de Racismo"/>
-                <Contador value='0' texto="Relatos de Injúria Racial"/>
+                <Contador value={ValueContadorCasos} texto="Quantidade de Relatos"/>
+                <Contador value='0' texto="Agressão Fisica"/>
             </div>
             <div>
                 <GraficoEspaco />

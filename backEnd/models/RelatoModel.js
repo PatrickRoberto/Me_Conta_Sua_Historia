@@ -1,13 +1,17 @@
 const mongoose = require('mongoose');
 
+
 let schema = mongoose.Schema({
-  Nome_Denunciante: String,
-  Idade_Denunciante: Number,
-  Raca_Denunciante: String,
-  Genero_Denunciante: String,
-  Relato: String,
-  Data_Relato: Date,
-  Agressor_Relato: String,
+  nomePessoa: String,
+  idadePessoa: Number,
+  racaPessoa: String,
+  generoPessoa: String,
+  textoRelato: String,
+  dataRelato: Date,
+  localRelato: String,
+  ufRelato: String,
+  cidadeRelato: String,
+
 });
 
 const RelatoModel = mongoose.model('relato', schema);

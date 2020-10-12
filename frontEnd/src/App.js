@@ -10,9 +10,7 @@ export default function App({children}){
         <div>
           {children}
         </div>
-      </div>
-
-     
+      </div> 
     );
   
 }

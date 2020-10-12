@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
-const routes = require('./routes/routes');
+const RelatoRoutes = require('./routes/RelatoRoutes');
 const path = require('path');
 const dotenv = require('dotenv');
 
@@ -33,7 +33,7 @@ app.get('/api/', (_, response) => {
 /**
  * Rotas principais do app
  */
-app.use('/api/Denuncia', routes);
+app.use('/api/Relato', RelatoRoutes);
 
 /**
  * Conexão ao Banco de Dados
