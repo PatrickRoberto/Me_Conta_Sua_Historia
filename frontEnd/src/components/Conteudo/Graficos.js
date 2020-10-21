@@ -5,8 +5,6 @@ import GraficoEspaco from '../Graficos/GraficoEspaco'
 export default function Graficos({relatos}) {
 
     const ValueContadorCasos = relatos.length;
-    const ValueCon = relatos.length;
-    
 
     return (
         <div style={STYLE}>

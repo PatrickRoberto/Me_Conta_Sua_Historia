@@ -1,4 +1,4 @@
-import React, {Component, useEffect, useState} from 'react';
+import React, { Component } from 'react';
 import estados from '../Help/Ufs';
 import {racas, generos} from '../Help/Dominios';
 import  * as service from '../Service/Service'

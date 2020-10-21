@@ -1,8 +1,7 @@
-import React, {useState, useEffect, Component} from 'react';
+import React, {Component} from 'react';
 import Conteudo from '../components/Conteudo/Conteudo';
 import Graficos from '../components/Conteudo/Graficos';
-import Relatos from '../components/Conteudo/Relatos';
-import relatosText from '../Help/Relatos';
+import Relato from '../components/Relatos/Relato';
 
 import {RecuperarRelatos} from '../Service/Service'
 
@@ -38,7 +37,7 @@ class Home extends Component {
       <div>
         <div className='container' >
           <Conteudo>
-            <Relatos relatos={this.state.RelatosResumo} />
+            <Relato relatos={this.state.RelatosResumo} />
             <Graficos relatos={this.state.Relatos} />
           </Conteudo>
         </div>

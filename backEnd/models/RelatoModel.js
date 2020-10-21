@@ -14,6 +14,6 @@ let schema = mongoose.Schema({
 
 });
 
-const RelatoModel = mongoose.model('relato', schema);
+const RelatoModel = mongoose.model('RELATO', schema, 'RELATOS');
 
 module.exports = RelatoModel;
