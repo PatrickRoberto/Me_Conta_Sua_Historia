@@ -46,4 +46,14 @@ RelatosnRouter.post('/cadastro', async (req, resp)=>{
     
 });
 
+RelatosnRouter.get('/relatosporgenero', async (req, resp)=>{
+    try {
+        const data = await RelatosServices.resumoRelatosPorGenero();
+        resp.send({SUCESSO_BUSCA, data});
+    } catch (error) {
+        resp.status(500).send({FALHA: FALHA_BUSCA, error});
+    }
+    
+});
+
 module.exports = RelatosnRouter;

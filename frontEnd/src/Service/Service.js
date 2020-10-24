@@ -14,4 +14,12 @@ const RecuperarRelatos = async () => {
     return Relatos;
 }
 
-export { CadastroRelato, RecuperarRelatos };
+const RecuperarRelatosParaGraficoGenero = async () => { 
+    const retorno = await api.get('/relatosporgenero');
+    const { data: ResumoPorGenero } = retorno.data;
+
+
+    return ResumoPorGenero;
+}
+
+export { CadastroRelato, RecuperarRelatos, RecuperarRelatosParaGraficoGenero };

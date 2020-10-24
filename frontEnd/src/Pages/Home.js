@@ -35,7 +35,7 @@ class Home extends Component {
 
     return (
       <div>
-        <div className='container' >
+        <div className='' >
           <Conteudo>
             <Relato relatos={this.state.RelatosResumo} />
             <Graficos relatos={this.state.Relatos} />

@@ -44,6 +44,33 @@ const CadastrarRelato = async (Relato) =>{
 
 }
 
-module.exports = { todosRelatos, CadastrarRelato };
+    //Trocar para fazer toda essa busca pelo próprio banco de dados
+    const resumoRelatosPorGenero = async () => {
+        const data = await RelatoModel.find({}, {_id: 0, generoPessoa: 1});
+        
+        const generos = [];
+
+        data.forEach(({generoPessoa}) => {
+            if(!generos.includes(generoPessoa))
+                generos.push(generoPessoa);
+        });
+        qtdPorGeneros = [];
+        generos.forEach(
+            gender => {
+                let qtd = data.reduce( (accumulator, current) => {
+                    return accumulator + (current.generoPessoa === gender ? 1 : 0)
+                }, 0);
+
+                qtdPorGeneros.push(qtd);
+            }
+        );
+
+        retorno = {generos, qtdPorGeneros} ;
+        console.log('Realizaou a busca: ', Buscas++);
+        return retorno;
+    }
+
+
+module.exports = { todosRelatos, CadastrarRelato, resumoRelatosPorGenero };
 
 
