@@ -42,19 +42,6 @@ class CadastrarRelatoPage extends Component {
             }
             try {
                 await service.CadastroRelato(relatoCreate);
-                /*this.setState({
-                    nomePessoa: '',
-                    idadePessoa: 18,
-                    racaPessoa: '',
-                    generoPessoa: '',
-                    textoRelato: '',
-                    dataRelato: '',
-                    localRelato: '',
-                    ufRelato: '',
-                    cidadeRelato: ''
-                });
-                */
-
                 window.location = '/'
 
             } catch (error) {
