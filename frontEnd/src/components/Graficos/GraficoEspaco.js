@@ -27,7 +27,7 @@ class GraficoEspaco extends Component {
       }
     
     render(){
-        console.log(this.state.valoresParaGrafico)
+
         const value1 = {
             label: 'Gender',
             labels: this.state.labelsParaGrafico,

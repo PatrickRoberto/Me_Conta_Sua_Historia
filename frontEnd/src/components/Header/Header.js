@@ -7,8 +7,8 @@ import MyLinks from '../../Help/Links';
 
 export default function Header() {
     return (
-        <div style={STYLE_1} >
-            <div className="container" style={STYLE_2}>
+        <div style={STYLE_1} className="black">
+            <div className="" style={STYLE_2}>
                 <Title />
                 <RelatoButton />
                 <Menu linkList={MyLinks} />
@@ -19,7 +19,7 @@ export default function Header() {
 
 const STYLE_1 = {
     widht: '100%',
-    padding:'10px',
+    padding:'25px',
     marginBottom: '15px',
     border: '1px solid black',
     background: 'gray',

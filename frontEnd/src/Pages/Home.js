@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import Conteudo from '../components/Conteudo/Conteudo';
 import Graficos from '../components/Conteudo/Graficos';
-import Relato from '../components/Relatos/Relato';
+import Relatos from '../components/Relatos/Relatos';
 
 import {RecuperarRelatos} from '../Service/Service'
 
@@ -21,7 +21,7 @@ class Home extends Component {
   async componentDidMount() {
     try {
       const dados = await RecuperarRelatos();
-      const dadosResumo = dados.slice(0, 4);
+      const dadosResumo = dados.slice(0, 5);
 
       this.setState({Relatos: dados});
       this.setState({RelatosResumo: dadosResumo});
@@ -37,8 +37,8 @@ class Home extends Component {
       <div>
         <div className='' >
           <Conteudo>
-            <Relato relatos={this.state.RelatosResumo} />
-            <Graficos relatos={this.state.Relatos} />
+            <Relatos relatos={this.state.RelatosResumo} width='50%'/>
+            <Graficos relatos={this.state.Relatos} TamanoTexto={150} />
           </Conteudo>
         </div>
       </div>

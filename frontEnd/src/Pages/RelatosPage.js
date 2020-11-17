@@ -1,7 +1,7 @@
 import { generos, estados } from '../Help/Dominios';
 
 import React, {Component} from 'react'
-import RelatoBox from '../components/Relatos/RelatoBox'
+import Relatos from '../components/Relatos/Relatos'
 
 import FilterArea from '../components/Filters/FilterArea'
 //import RangeFilter from './RangeFilter';
@@ -90,7 +90,7 @@ export default class RelatosPage extends Component {
                     /> 
 
                   </FilterArea>
-                  <RelatoBox relatos={this.state.RelatosResumo}/>
+                  <Relatos relatos={this.state.RelatosResumo} width='100%' TamanoTexto={300}/>
                 </div>
             </div>
         );

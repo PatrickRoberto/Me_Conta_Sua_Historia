@@ -5,7 +5,7 @@ export default function RelatoButton() {
     return (
         <div>
             <Link to="/relato">
-                < button className="button">Sua Historia</button>            
+                < button className="waves-effect grey darken-1 btn" style={{fontSize:'1em'}}>Sua Historia</button>            
             </Link>
 
         </div>

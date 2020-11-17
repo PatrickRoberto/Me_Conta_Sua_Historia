@@ -5,12 +5,12 @@ import { Link } from 'react-router-dom';
 
 export default function Menu({linkList}) {
     return (
-        <div style={STYLE}>
+        <div style={STYLE} >
             {linkList.map( link => {
                 return ( 
                     <Link key={link.text} style={STYLE_LINK} to={link.route}>
                         <span style={STYLE_LINK}>{link.text}</span>
-                        {pipline}
+                        
                     </Link> 
                 )
             })
@@ -27,9 +27,11 @@ const  STYLE = {
 }
 
 const STYLE_LINK = {
-    color: 'black',
+    color: 'white',
     textDecoration: 'none',
+    padding: '10px',
+    fontSize: '1.1em'
     
 }
 
-const pipline = ' | '
+//const pipline = ' | '
