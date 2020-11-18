@@ -1,1 +1,1 @@
-web: cd backEnd node index.js
+web: npm start
