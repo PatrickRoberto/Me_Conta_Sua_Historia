@@ -4,7 +4,7 @@
   
   "scripts": {
     "start": "cd backEnd && node index.js",
-    "install": "cd backEnd && node install"
+    "install": "cd backEnd && npm install"
   }
  
 }
