@@ -22,4 +22,12 @@ const RecuperarRelatosParaGraficoGenero = async () => {
     return ResumoPorGenero;
 }
 
-export { CadastroRelato, RecuperarRelatos, RecuperarRelatosParaGraficoGenero };
+const DownloadDadosCsv = async () =>{
+    //const x = await api.get('/download');
+    const x = await api.request('/download').then(response => {
+        window.open(response.request.responseURL);
+    });
+    //console.log(x)
+}
+
+export { CadastroRelato, RecuperarRelatos, RecuperarRelatosParaGraficoGenero, DownloadDadosCsv };

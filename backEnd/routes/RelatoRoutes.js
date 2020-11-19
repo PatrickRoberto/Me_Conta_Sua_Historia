@@ -56,4 +56,16 @@ RelatosnRouter.get('/relatosporgenero', async (req, resp)=>{
     
 });
 
+RelatosnRouter.get('/download', async (req, resp)=>{
+    try {
+        const data = await RelatosServices.downloadCsv();
+        resp.header('Content-Type', 'text/csv');
+        resp.attachment('Me_conta_sua_historia.csv');
+        resp.send(data);
+    } catch (error) {
+        resp.status(500).send({FALHA: FALHA_BUSCA, error});
+    }
+    
+});
+
 module.exports = RelatosnRouter;

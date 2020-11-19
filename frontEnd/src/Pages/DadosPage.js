@@ -10,7 +10,7 @@ import SelectFilter from '../components/Filters/SelectFilter';
 
 import * as GraficosControle from '../Service/GraficosControle';
 
-import {RecuperarRelatos} from '../Service/Service'
+import {RecuperarRelatos, DownloadDadosCsv } from '../Service/Service'
 import {generos, estados} from '../Help/Dominios';
 
 export default class DadosPage extends Component {
@@ -106,43 +106,52 @@ export default class DadosPage extends Component {
     //this.setState({qtdAgressoesFisicas: qtdAgressoes});
   };
 
-    render() {
-      
-        return (
-            <div style={{margin: '50px'}}>
-                <FilterArea>
-                    <SelectFilter 
-                      key="FilterGenero"
-                      titulo="Genero" 
-                      opcoes={generos} 
-                      name={'generoPessoa'} 
-                      changeSelectFilter={(a, b)=>{this.Filtered(a, b)}}
-                    /> 
+  async downloadCsv(e){
+    console.log('Clicou')
+    await DownloadDadosCsv();
+  }
 
-                    <SelectFilter 
-                      key="FilterEstado"
-                      titulo="Estado" 
-                      opcoes={estados.map(est => est.sigla)} 
-                      name={'ufRelato'} 
-                      changeSelectFilter={(a, b)=>{this.Filtered(a, b)}}
-                    /> 
-                  </FilterArea>
 
-                <div style={STYLE_BOX} className='row'>
-                    <Contador value={this.state.qtdRelatos} texto="Quantidade de Relatos"/>
-                    <Contador value={this.state.qtdAgressoesFisicas} texto="Agressão Fisica"/>
-                    <Contador value='0' texto="Agressão Fisica"/>
-                    <Contador value='0' texto="Agressão Fisica"/>
-                </div>
+  render() {
+    
+      return (
+          <div style={{margin: '50px'}}>
+              <FilterArea>
+                  <SelectFilter 
+                    key="FilterGenero"
+                    titulo="Genero" 
+                    opcoes={generos} 
+                    name={'generoPessoa'} 
+                    changeSelectFilter={(a, b)=>{this.Filtered(a, b)}}
+                  /> 
 
-                <div style={{...STYLE_BOX, ...STYLE}} className="row">
-                    <GraficoBarras values={this.state.graph2}/>
-                    <GraficoBarrasDeitado values={this.state.graph1}/>
-                </div>
-                
-            </div>
-        )
-    }
+                  <SelectFilter 
+                    key="FilterEstado"
+                    titulo="Estado" 
+                    opcoes={estados.map(est => est.sigla)} 
+                    name={'ufRelato'} 
+                    changeSelectFilter={(a, b)=>{this.Filtered(a, b)}}
+                  /> 
+                </FilterArea>
+
+              <div style={STYLE_BOX} className='row'>
+                  <Contador value={this.state.qtdRelatos} texto="Quantidade de Relatos"/>
+                  <Contador value={this.state.qtdAgressoesFisicas} texto="Agressão Fisica"/>
+              
+              </div>
+
+              <div style={{...STYLE_BOX, ...STYLE}} className="row">
+                  <GraficoBarras values={this.state.graph2}/>
+                  <GraficoBarrasDeitado values={this.state.graph1}/>
+              </div>
+
+              <button className="button" onClick={ e => this.downloadCsv(e)}> 
+                Downald dos Dados
+              </button>
+              
+          </div>
+      )
+  }
 }
 
 const STYLE_BOX = {

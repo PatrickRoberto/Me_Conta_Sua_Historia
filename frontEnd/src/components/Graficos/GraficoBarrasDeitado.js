@@ -24,7 +24,7 @@ export default function GraficoBarrasDeitado({values}) {
                 fill: true,
                 backgroundColor: 'black',
                 hoverBackgroundColor: gradientStroke,
-                borderColor: "#d048b6",
+                borderColor: "#fff",
                 borderWidth: 2,
                 borderDash: [],
                 borderDashOffset: 0.0,
@@ -55,13 +55,13 @@ export default function GraficoBarrasDeitado({values}) {
                 gridLines: {
                   drawBorder: false,
                   color: "rgba(225,78,202,0.1)",
-                  zeroLineColor: "transparent"
+                  zeroLineColor: "rgba(225,78,202,0.1)"
                 },
                 ticks: {
                   suggestedMin: values ? values.min : 0,
                   suggestedMax: values ? values.max : 100,
                   padding: 20,
-                  fontColor: "#9e9e9e"
+                  fontColor: "#fff"
                 }
               }
             ],
@@ -70,11 +70,11 @@ export default function GraficoBarrasDeitado({values}) {
                 gridLines: {
                   drawBorder: false,
                   color: "rgba(225,78,202,0.1)",
-                  zeroLineColor: "transparent"
+                  zeroLineColor: "rgba(225,78,202,0.1)"
                 },
                 ticks: {
                   padding: 20,
-                  fontColor: "yellow",
+                  fontColor: "#fff",
                 }
               }
             ]
@@ -85,7 +85,7 @@ export default function GraficoBarrasDeitado({values}) {
 
     
     return (
-        <div style={{border: '1px solid red', margin: '2px'}} className='col s12 m6'>
+        <div style={STYLE} className='col s12 m6 card grey darken-4'>
             <HorizontalBar
                 data={chartScheme.data}
                 options={chartScheme.options}
@@ -93,3 +93,5 @@ export default function GraficoBarrasDeitado({values}) {
         </div>
     )
 }
+
+const STYLE = { margin: '5px', padding:'5px'}

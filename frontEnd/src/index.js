@@ -17,8 +17,9 @@ import DadosPage from './Pages/DadosPage';
 
 ReactDOM.render(
  (
-   
+ 
  <Router>
+
     <App>
       <Switch>
         <Route exact path="/" component={Home}/>
@@ -28,6 +29,7 @@ ReactDOM.render(
         <Route path="/Dados" component={DadosPage}/>
       </Switch>
     </App>
+
   </Router>
 ),
   document.getElementById('root')

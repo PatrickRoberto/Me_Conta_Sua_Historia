@@ -36,7 +36,7 @@ class GraficoEspaco extends Component {
             min: 0,
         }
         return (
-            <div style={STYLE}>
+            <div style={STYLE} className='row'>
                 <GraficoBarros values={value1}/>
                 <GraficoBarrasDeitado values={value1}/>
             </div>
@@ -48,10 +48,10 @@ const STYLE = {
     display: 'flex',
     justifyContent: 'flex-start',
     aligItems: 'flex-start',
-    border: '1px solid red',
-    background: 'gray',
+    //border: '1px solid red',
+    //background: 'black',
     minHeight: '250px',
-    padding: '10px'
+    padding: '15px'
 }
 
 export default GraficoEspaco;

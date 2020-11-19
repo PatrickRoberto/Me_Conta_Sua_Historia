@@ -23,9 +23,10 @@ export default function Graficos({relatos}) {
 
 const STYLE = {
     width: '50%',
-    border: '1px solid blue',
+    //border: '1px solid blue',
     margin: '5px',
     padding: '5px',
+    background: 'black'
 }
 
 const STYLE_CONTADORES = {

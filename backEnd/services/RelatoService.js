@@ -2,6 +2,9 @@ const mongoose = require('mongoose');
 const ObjectId = mongoose.Types.ObjectId;
 
 const dotenv = require('dotenv');
+
+const { Parser } = require('json2csv');
+
 dotenv.config();
 
 const RelatoModel = require('../models/RelatoModel');
@@ -70,7 +73,34 @@ const CadastrarRelato = async (Relato) =>{
         return retorno;
     }
 
+    const downloadCsv = async() =>{
+        try{
+            const data = await RelatoModel.find({});
+            const fields = [
+                'nomePessoa',
+                'idadePessoa',
+                'racaPessoa',
+                'generoPessoa',
+                'dataRelato',
+                'localRelato',
+                'ufRelato',
+                'cidadeRelato',
+                'agressaoFisica'
+            ];
+            const opts = {fields};
 
-module.exports = { todosRelatos, CadastrarRelato, resumoRelatosPorGenero };
+            const parser = new Parser(opts);
+            const csv = parser.parse(data);
+            return csv;
+
+        }catch(err){
+            console.log(err);
+            throw err;
+        }
+       
+    }
+
+
+module.exports = { todosRelatos, CadastrarRelato, resumoRelatosPorGenero, downloadCsv};
 
 
