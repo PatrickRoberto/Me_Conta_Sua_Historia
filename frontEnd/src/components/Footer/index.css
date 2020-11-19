@@ -1,0 +1,10 @@
+.black-white-text {
+  background-color: #000 !important;
+  text-align: center;
+  color: #fff !important;
+  height: 95px;
+  position: fixed;
+  bottom: 0px;
+  width: 100%;
+  padding-top: 15px;
+}

@@ -37,7 +37,7 @@ const racas = [
 ];
 
 const generos = [
-    'Feminio',
+    'Feminino',
     'Masculino',
     'Outro',
     'Prefiro não definir'

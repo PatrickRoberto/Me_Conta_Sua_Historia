@@ -1,0 +1,9 @@
+button.waves-effect.grey.darken-1.btn {
+  background-color: #d7b301 !important;
+  color: #000;
+  font-weight: bold;
+}
+
+button.waves-effect.grey.darken-1.btn:hover {
+  background-color: #eaa424 !important;
+}
