@@ -35,8 +35,8 @@ RelatosnRouter.get('/relatos', async (req, resp)=>{
 
 RelatosnRouter.post('/cadastro', async (req, resp)=>{
     try {
-
         const relato = req.body;
+        console.log(relato);
         const data = await RelatosServices.CadastrarRelato(relato);
         
         resp.send({SUCESSO_BUSCA, data});

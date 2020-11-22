@@ -11,7 +11,8 @@ let schema = mongoose.Schema({
   localRelato: String,
   ufRelato: String,
   cidadeRelato: String,
-  agressaoFisica: Boolean
+  agressaoFisica: Boolean,
+  aconteceuComigo: Boolean,
 
 });
 

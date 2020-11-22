@@ -19,6 +19,7 @@ class CadastrarRelatoPage extends Component {
       ufRelato: "",
       cidadeRelato: "",
       agressaoFisica: false,
+      aconteceuComigo: true,
       //anoRelato: new Date().getFullYear(),
       //mesRelato: new Date().getMonth(),
       //diaRelato: '',
@@ -43,6 +44,7 @@ class CadastrarRelatoPage extends Component {
       ufRelato: this.state.ufRelato,
       cidadeRelato: this.state.cidadeRelato,
       agressaoFisica: this.state.agressaoFisica,
+      aconteceuComigo: this.state.aconteceuComigo,
       //anoRelato:  this.state.anoRelato,
       //mesRelato: this.state.mesRelato,
       //diaRelato: this.state.diaRelato,
@@ -73,6 +75,23 @@ class CadastrarRelatoPage extends Component {
           <form onSubmit={(e) => this.enviarContato(e)}>
             <div style={this.state.STYLE} className="row">
               <h5>Informações Pessoais</h5>
+
+              <label className="col s3">
+                Foi com você?
+                <select
+                  value={this.state.aconteceuComigo}
+                  onChange={(e) => this.setProperty("aconteceuComigo", e)}
+                  name="aconteceuComigo"
+                >
+                  <option key={"aconteceuComigo"} value={true}>
+                    {"Acontecue comigo"}
+                  </option>
+                  <option key={"PresencieiAcontecendo"} value={false}>
+                    {"Presenciei acontecendo!"}
+                  </option>
+                </select>
+              </label>
+
               <label className="col s6">
                 Nome: (opicional)
                 <input
@@ -213,8 +232,14 @@ class CadastrarRelatoPage extends Component {
                 />
               </label>
             </div>
-
-            <input type="submit" value="Enviar" />
+            
+            
+            <button  
+              className="waves-effect grey darken-1 btn"
+              style={{ fontSize: "0.9em", height:"5em", lineHeight: '2', width:"12em" }} 
+            >
+              <input type="submit" value="Enviar"  />
+            </button>
           </form>
         </div>
       </div>

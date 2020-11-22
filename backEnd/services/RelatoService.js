@@ -85,7 +85,8 @@ const CadastrarRelato = async (Relato) =>{
                 'localRelato',
                 'ufRelato',
                 'cidadeRelato',
-                'agressaoFisica'
+                'agressaoFisica',
+                'aconteceuComigo'
             ];
             const opts = {fields};
 

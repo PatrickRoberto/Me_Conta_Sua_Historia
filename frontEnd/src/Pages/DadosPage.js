@@ -152,8 +152,11 @@ export default class DadosPage extends Component {
           <GraficoBarrasDeitado values={this.state.graph1} />
         </div>
 
-        <button className="button" onClick={(e) => this.downloadCsv(e)}>
-          Download de dados
+        <button  
+          className="waves-effect grey darken-1 btn"
+          style={{ fontSize: "0.9em", height:"5em", lineHeight: '2', width:"12em" }} 
+          onClick={(e) => this.downloadCsv(e)}>
+          Download dos dados
         </button>
       </div>
     );
