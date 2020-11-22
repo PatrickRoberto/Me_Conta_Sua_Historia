@@ -10,7 +10,7 @@ export default function RelatoButton() {
           className="waves-effect grey darken-1 btn"
           style={{ fontSize: "0.8em", height:"4em", lineHeight: '1.5', width:"12em" }}
         >
-          Relate aqui sua história
+          Conte sua História
         </button>
       </Link>
     </div>

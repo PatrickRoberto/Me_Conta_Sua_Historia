@@ -7,7 +7,7 @@ export default function Title() {
     <div style={STYLE}>
       <img
         src={logo}
-        width="80%"
+        width="50%"
         alt="Me Conta Sua História"
         border="1px solid green"
       />

@@ -18,8 +18,9 @@ export default function Header() {
 }
 
 const STYLE_1 = {
-    widht: '100%',
+    //widht: '100%',
     padding:'25px',
+    height: '150px',
     marginBottom: '15px',
     border: '1px solid black',
     background: 'gray',

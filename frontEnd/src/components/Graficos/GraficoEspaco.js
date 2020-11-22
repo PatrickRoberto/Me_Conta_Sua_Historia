@@ -2,24 +2,34 @@ import React, { Component } from 'react'
 import GraficoBarros from './GraficoBarras'
 import GraficoBarrasDeitado from './GraficoBarrasDeitado'
 
-import {RecuperarRelatosParaGraficoGenero} from '../../Service/Service'
+import * as GraficosControle from "../../Service/GraficosControle";
+import { RecuperarRelatos } from "../../Service/Service";
 
 class GraficoEspaco extends Component {
     
     constructor(props) {
         super(props);
         this.state = {
-            labelsParaGrafico: [],
-            valoresParaGrafico: [],
+          relatos: [],
+          graph1: {},
+          graph2: {},
         }
       }
     
       async componentDidMount() {
         try {
-          const dados = await RecuperarRelatosParaGraficoGenero();
-    
-          this.setState({labelsParaGrafico: dados.generos});
-          this.setState({valoresParaGrafico: dados.qtdPorGeneros});
+
+          const dados = await RecuperarRelatos();
+          this.setState({ relatos: dados });
+          const graficoFaixaEtaria = GraficosControle.faixaEtaria(
+            this.state.relatos
+          );
+          const graficoPorGenero = GraficosControle.distribuicaoGeneros(
+            this.state.relatos
+          );
+
+          this.setState({ graph1: graficoPorGenero });
+          this.setState({ graph2: graficoFaixaEtaria });
     
         } catch (error) {
           console.log('Deu ruim')
@@ -28,17 +38,10 @@ class GraficoEspaco extends Component {
     
     render(){
 
-        const value1 = {
-            label: 'Gender',
-            labels: this.state.labelsParaGrafico,
-            data: this.state.valoresParaGrafico,
-            max: 10,
-            min: 0,
-        }
         return (
             <div style={STYLE} className='row'>
-                <GraficoBarros values={value1}/>
-                <GraficoBarrasDeitado values={value1}/>
+                <GraficoBarros values={this.state.graph1}/>
+                <GraficoBarrasDeitado values={this.state.graph2}/>
             </div>
     )}
 }

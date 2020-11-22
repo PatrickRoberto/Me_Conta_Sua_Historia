@@ -20,7 +20,7 @@ class Relato extends Component {
   render() {
     const { TextoExibido } = this.props;
     return (
-      <div class="card blue-grey darken-3">
+      <div className="card blue-grey darken-3">
         <div style={this.STYLE} className="card-content white-text">
           {TextoExibido}
         </div>
