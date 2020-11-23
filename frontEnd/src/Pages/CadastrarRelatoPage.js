@@ -102,8 +102,9 @@ class CadastrarRelatoPage extends Component {
                 />
               </label>
               <label className="col s3">
-                Idade:
+                Idade :
                 <input
+                  required
                   type="number"
                   min="1"
                   name="idadePessoa"
@@ -114,6 +115,7 @@ class CadastrarRelatoPage extends Component {
               <label className="col s3">
                 Raça:
                 <select
+                  required
                   value={this.state.racaPessoa}
                   onChange={(e) => this.setProperty("racaPessoa", e)}
                   name="racaPessoa"
@@ -133,6 +135,7 @@ class CadastrarRelatoPage extends Component {
               <label className="col s3">
                 Genêro:
                 <select
+                  required
                   value={this.state.generoPessoa}
                   onChange={(e) => this.setProperty("generoPessoa", e)}
                   name="generoPessoa"
@@ -155,6 +158,7 @@ class CadastrarRelatoPage extends Component {
               <h5>Relato</h5>
               <label className="col s12">
                 <textarea
+                  required
                   className="materialize-textarea"
                   name="textoRelato"
                   rows="25"
@@ -180,6 +184,7 @@ class CadastrarRelatoPage extends Component {
 
               <label className="col s1">
                 UF:
+                required
                 <select
                   value={this.state.ufRelato}
                   onChange={(e) => this.setProperty("ufRelato", e)}
@@ -225,6 +230,7 @@ class CadastrarRelatoPage extends Component {
                 Data Ocorrido: (se não lembrar a data exata, pode colocar
                 somente ano e mês)
                 <input
+                  required
                   type="date"
                   name="dataRelato"
                   value={this.state.dataRelato}
