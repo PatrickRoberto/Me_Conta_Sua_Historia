@@ -57,8 +57,11 @@ RelatosnRouter.get('/relatosporgenero', async (req, resp)=>{
 });
 
 RelatosnRouter.get('/download', async (req, resp)=>{
+    const filtros = req.query;
+
     try {
-        const data = await RelatosServices.downloadCsv();
+        const data = await RelatosServices.downloadCsv(filtros);
+        const result = data.f
         resp.header('Content-Type', 'text/csv');
         resp.attachment('Me_conta_sua_historia.csv');
         resp.send(data);

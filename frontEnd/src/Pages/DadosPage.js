@@ -107,8 +107,12 @@ export default class DadosPage extends Component {
   }
 
   async downloadCsv(e) {
-    console.log("Clicou");
-    await DownloadDadosCsv();
+    const filter ={
+      [this.state.filters[0].filterName]: this.state.filters[0].value,
+      [this.state.filters[1].filterName]: this.state.filters[1].value
+    }
+    console.log(filter)
+    await DownloadDadosCsv(filter);
   }
 
   render() {

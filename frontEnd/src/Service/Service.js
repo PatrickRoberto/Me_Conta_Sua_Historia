@@ -21,9 +21,12 @@ const RecuperarRelatosParaGraficoGenero = async () => {
     return ResumoPorGenero;
 }
 
-const DownloadDadosCsv = async () =>{
+const DownloadDadosCsv = async (filters) =>{
 
-    await api.request('/download').then(response => {
+    const data ={
+        params: {...filters},
+    }
+    await api.get('/download/', data).then(response => {
         window.open(response.request.responseURL);
     });
 }

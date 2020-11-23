@@ -73,9 +73,21 @@ const CadastrarRelato = async (Relato) =>{
         return retorno;
     }
 
-    const downloadCsv = async() =>{
+    const downloadCsv = async(filtros) =>{
+        console.log(filtros)
         try{
-            const data = await RelatoModel.find({});
+            let data = await RelatoModel.find({});
+            if(filtros.generoPessoa){
+                data = data.filter((obj) =>{
+                    return obj.generoPessoa === filtros.generoPessoa; 
+                });
+            }
+            if(filtros.ufRelato){
+                data = data.filter((obj) =>{
+                    return obj.ufRelato === filtros.ufRelato; 
+                });
+            }
+            
             const fields = [
                 'nomePessoa',
                 'idadePessoa',
