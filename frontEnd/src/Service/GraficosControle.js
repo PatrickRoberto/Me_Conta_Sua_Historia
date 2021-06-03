@@ -1,12 +1,21 @@
-import  * as service from './Service';
+import  * as service from './ServiceRelato';
 import {faixaEtarias} from '../Help/Dominios'
-
+import * as complemento from './ServiceComplementos'
 
 //Exemplo
 const valueFormat = (label, labels, data, min, max) => {
     return {label: label,
         labels: labels,
         data: data,
+        min: min,
+        max: max,
+    }
+}
+
+const valueFormat2 = (tiltle, data, min, max) => {
+    return {label: tiltle,
+        labels: data.map(item => item.label),
+        data: data.map(item => item.value),
         min: min,
         max: max,
     }
@@ -31,20 +40,22 @@ const distribuicaoGenerosService = async () =>{
     return valueFormat('Genero', dados.generos, dados.qtdPorGeneros, 0, 10);
 }
 
-const distribuicaoGeneros = (relatos) =>{
+const distribuicaoGeneros = async (relatos) =>{
     
-    const generos = [];
+    const generosRef = await complemento.RecuperaGeneros();
     const qtdPorGeneros = [];
 
+    /*
     relatos.forEach(({generoPessoa}) => {
         if(!generos.includes(generoPessoa))
             generos.push(generoPessoa);
     });
-
-    generos.forEach(
+    */
+   const genero = generosRef.map( gen => gen.Texto)
+    generosRef.forEach(
         gender => {
             let qtd = relatos.reduce( (accumulator, current) => {
-                return accumulator + (current.generoPessoa === gender ? 1 : 0)
+                return accumulator + (current.generoPessoa === gender.ID_REF ? 1 : 0)
             }, 0);
 
             qtdPorGeneros.push(qtd);
@@ -52,48 +63,101 @@ const distribuicaoGeneros = (relatos) =>{
     );
 
     //retorno = {generos, qtdPorGeneros} ;
-    return valueFormat('Genero', generos, qtdPorGeneros, 0, 10);
+    return valueFormat('Genero', genero, qtdPorGeneros, 0, 10);
 }
 
+const distribuicaoLocais = async (relatos) =>{
+    
+    const locaisRef = await complemento.RecuperaLocal();
+    let qtdPorLocal = [];
+
+
+
+    
+   locaisRef.forEach(
+        local => {
+            let qtd = relatos.reduce( (accumulator, current) => {
+                return accumulator + (current.localRelato === local.ID ? 1 : 0)
+            }, 0);
+            qtdPorLocal.push({label: local.Texto, value: qtd});
+        }
+    );
+
+    //Locais.push('Outros')
+    //qtdPorLocal.push(relatos.length - Calculado)
+    //retorno = {generos, qtdPorGeneros} ;
+    //return valueFormat('Locais', Locais, qtdPorLocal, 0, 10);
+   
+    qtdPorLocal = qtdPorLocal.sort((a, b) => b.value - a.value)
+    
+    let qtdPorLocalReduzida = qtdPorLocal.slice(0, 5)
+    const qtdOutros = qtdPorLocal.slice(5).reduce((acc, cur) => acc + cur.value, 0)
+    const outs = {label: 'Outros', value: qtdOutros}
+    
+    qtdPorLocalReduzida.push(outs)
+    return valueFormat2('Locais', qtdPorLocalReduzida, 0, 10)
+
+}
 
 const distribuicaoPorCidadeTabela = (relatos) =>{
-    console.log('distribuicaoPorCidadeTabela', relatos);
-    if(relatos){
-            
-        console.log(relatos)
-        let uf_cidade = [];
-        relatos.foreach(({ufRelato, cidadeRelato}) => {
-            console.log('Entrou nos relatos')
-            uf_cidade.forEach( item => {
-                console.log('entrou nos ufs')
-                if(item.uf === ufRelato && item.cidade === cidadeRelato)
-                    return;
-                else
-                    uf_cidade.push({uf: ufRelato, cidade: cidadeRelato});
-            });
-        });
+    
+    const Ufs_Cidades = relatos.map( item => {return {uf: item.ufRelato, cidade: item.cidadeRelato}})
+    let uf_cidade = [];
+    Ufs_Cidades.forEach(({uf, cidade}) => {
+        if(!uf_cidade.find(item => item.uf === uf && item.cidade === cidade ))
+            uf_cidade.push({uf: uf, cidade: cidade});
+    });
 
-        console.log(uf_cidade);
-    }
+    let valor = []
+   
 
-    const heaters = ['UF', 'Cidade', 'Quantidade de Relatos',];
-    const rows = [
-        {index: 1, datas: ['SP', 'São Paulo', 6]},
-        {index: 2, datas: ['MG', 'Belo Horizonte', 9]},
-        {index: 3, datas: ['ES', 'Vitoria', 16]},
-        {index: 4, datas: ['MG', 'Santa Luzia', 3]},
-        {index: 5, datas: ['SP', 'Macae', 16]},
-      ]
-      return {heaters, rows};
+    uf_cidade.forEach(item => {
+        let qtdRelatos = 0
+        let qtdAgressoesFisicas = 0
+        let qtdCasosPoliciais = 0
+
+        relatos.forEach( rel => {
+            if(rel.ufRelato === item.uf && rel.cidadeRelato === item.cidade){
+                qtdRelatos++
+                if(rel.agressaoFisica)
+                    qtdAgressoesFisicas++
+                if(rel.casoPolicial) 
+                    qtdCasosPoliciais++
+            }
+        })
+
+        const modelo = {
+            uf: item.uf,
+            cidade:item.cidade,
+            TotalRegistros: qtdRelatos,
+            AgresãoFisica: qtdAgressoesFisicas,
+            CasosPoliciais: qtdCasosPoliciais
+        }
+
+        valor.push(modelo)
+    })
+
+    valor.sort( (a, b) => b.TotalRegistros - a.TotalRegistros)
+    valor = valor.map((item, index) => {return {...item, position: index+1}})
+
+    return valor;
+
 }
 
+/**
+ * 
+ * @param {*} relatos 
+ * @returns 
+ */
 const QtdRelatos = (relatos) => relatos.length;
 
-const QtdAgressoesFisicas = (relatos) => relatos.reduce( (acc, cont) => {
-        acc += cont.agressaoFisica ? 1 : 0;
-        return acc;
-    }, 0 );
+const QtdAgressoesFisicas = (relatos) => relatos.reduce( (acc, cont) => acc += cont.agressaoFisica ? 1 : 0, 0 );
+/**
+ * 
+ * @param {*} relatos 
+ * @returns valor de 
+ */
+const QtdCasosPoliciais = (relatos) => relatos.reduce( (acc, cont) => acc += cont.casoPolicial ? 1 : 0, 0 );
 
 
-
-export {faixaEtaria, distribuicaoGeneros, distribuicaoGenerosService, distribuicaoPorCidadeTabela, QtdRelatos, QtdAgressoesFisicas }
+export {faixaEtaria, distribuicaoGeneros, distribuicaoGenerosService, distribuicaoPorCidadeTabela, QtdRelatos, QtdAgressoesFisicas, distribuicaoLocais, QtdCasosPoliciais }
