@@ -7,12 +7,14 @@ let schema = mongoose.Schema({
   racaPessoa: String,
   generoPessoa: String,
   textoRelato: String,
+  textoRelatoTratado: String,
   dataRelato: Date,
-  localRelato: String,
+  localRelato: Number,
   ufRelato: String,
   cidadeRelato: String,
   agressaoFisica: Boolean,
   aconteceuComigo: Boolean,
+  casoPolicial: Boolean,
 
 });
 

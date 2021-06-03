@@ -2,11 +2,12 @@ import React, { Component } from "react";
 
 class Relato extends Component {
   STYLE = {
-    border: "1px solid #4e4e4e",
-    backgroundColor: "lightslategray",
-    padding: "10px",
+    //border: "1px solid red",
+    borderRadius: '10px',
+    //backgroundColor: "gray",
     padding: "10px",
     marginBottom: "10px",
+    minHeight: '100px'
   };
 
   constructor(props) {
@@ -18,12 +19,17 @@ class Relato extends Component {
   }
 
   render() {
-    const { TextoExibido } = this.props;
+    const { TextoExibido, relato } = this.props;
     return (
       <div className="card blue-grey darken-3">
-        <div style={this.STYLE} className="card-content white-text">
+        <div className="card-head white-text">
+          Titulos
+        </div>
+
+        <div style={this.STYLE} className="card-content white-text col s4" >
           {TextoExibido}
         </div>
+
       </div>
     );
   }

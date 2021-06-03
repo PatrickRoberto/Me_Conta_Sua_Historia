@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
 const RelatoRoutes = require('./routes/RelatoRoutes');
+const ComplementosRouter = require('./routes/ComplementosRouter');
 const path = require('path');
 const dotenv = require('dotenv');
 
@@ -34,6 +35,7 @@ app.get('/api/', (_, response) => {
  * Rotas principais do app
  */
 app.use('/api/Relato', RelatoRoutes);
+app.use('/api/Complemento', ComplementosRouter);
 
 /**
  * Conexão ao Banco de Dados

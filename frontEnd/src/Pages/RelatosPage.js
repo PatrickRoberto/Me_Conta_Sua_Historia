@@ -7,7 +7,7 @@ import FilterArea from "../components/Filters/FilterArea";
 //import RangeFilter from './RangeFilter';
 import SelectFilter from "../components/Filters/SelectFilter";
 
-import { RecuperarRelatos } from "../Service/Service";
+import { RecuperarRelatos } from "../Service/ServiceRelato";
 
 export default class RelatosPage extends Component {
   STYLE = {

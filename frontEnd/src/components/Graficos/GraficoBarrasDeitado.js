@@ -1,5 +1,6 @@
 import React from 'react'
 import { HorizontalBar } from "react-chartjs-2";
+import {GraphsStyle} from '../../Css/Styles'
 
 const lablesExemplo = ["Label 1", "Label 2", "Label 3"];
 const dataExemplo = [53, 20, 10, 80, 100, 45];
@@ -85,7 +86,7 @@ export default function GraficoBarrasDeitado({values}) {
 
     
     return (
-        <div style={STYLE} className='col s12 m6 card grey darken-4'>
+        <div style={GraphsStyle} className='col s12 m6 card grey darken-4'>
             <HorizontalBar
                 data={chartScheme.data}
                 options={chartScheme.options}
@@ -93,5 +94,3 @@ export default function GraficoBarrasDeitado({values}) {
         </div>
     )
 }
-
-const STYLE = { margin: '5px', padding:'5px'}

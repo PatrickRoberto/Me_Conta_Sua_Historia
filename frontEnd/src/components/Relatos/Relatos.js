@@ -8,6 +8,7 @@ class Relatos extends Component {
       STYLE: {
         width: props.width,
         //border: '1px solid blue',
+        with: '100%',
         margin: "5px",
         padding: "5px",
       },
@@ -29,14 +30,15 @@ class Relatos extends Component {
         {this.props.relatos.map((relato, id) => {
           const TamanoTexto = this.props.TamanoTexto || 150;
           const TextoExibido =
-            relato.textoRelato.length > TamanoTexto
-              ? `${relato.textoRelato.substring(0, TamanoTexto)}...`
-              : relato.textoRelato;
+            relato.textoRelatoTratado.length > TamanoTexto
+              ? `${relato.textoRelatoTratado.substring(0, TamanoTexto)}...`
+              : relato.textoRelatoTratado;
 
           //console.log(TextoExibido);
+          const dataFormat = relato.dataRelato;
           return (
             <div key={id} style={this.state.STYLE_TEXT}>
-              <Relato TextoExibido={TextoExibido} />
+              <Relato relato={relato} TextoExibido={TextoExibido} Data={dataFormat}/>
             </div>
           );
         })}

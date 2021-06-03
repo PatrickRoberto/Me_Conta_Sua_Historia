@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
 const ObjectId = mongoose.Types.ObjectId;
+const helper = require('../Helpers/Helper.js')
+
 
 const dotenv = require('dotenv');
 
@@ -8,6 +10,7 @@ const { Parser } = require('json2csv');
 dotenv.config();
 
 const RelatoModel = require('../models/RelatoModel');
+const NomesModel = require('../models/NomesModel')
 
 const URL_CONNECTION = process.env.DB_CONNECTION;
 
@@ -28,24 +31,45 @@ const todosRelatos = async () => {
 }
 
 const CadastrarRelato = async (Relato) =>{
-    console.log('Chegou aqui');
-    console.log(Relato)
     try {
         if(!Relato) {
             console.log('Chegou vazio')
             return {message: 'Dados Vazios'}
         }
+        const nomes = []
+        const dataNames =  await NomesModel.find({}, {_id: 0, Name: 1})
+        dataNames.forEach(item => nomes.push(item.Name))
+
+        Relato.textoRelatoTratado = await helper.removerNome(Relato.textoRelato, nomes)
         const relatoCadastro = new RelatoModel(Relato);
         const data = await relatoCadastro.save();
-        console.log('Realizaou o cadastro: ', data);
+
         return data;
     } catch (error) {
         console.log(error);
-        return error;
+        throw error;
     }
 
 
 }
+
+
+const atualizarTextoRelatos = async () =>{
+    console.log('entrou na chamada')
+    const relatos = await RelatoModel.find({}, {_id: 1, textoRelato: 1});
+    
+    const nomes = []
+    const dataNames =  await NomesModel.find({}, {_id: 0, Name: 1})
+    dataNames.forEach(item => nomes.push(item.Name))
+
+    for(relato of relatos){
+        const textoTratado = await helper.removerNome(relato.textoRelato, nomes)
+        const {_id} = relato
+        await RelatoModel.updateOne({_id: _id}, {  $set: {textoRelatoTratado: textoTratado}})
+    }
+    return 'Foi'
+}
+
 
     //Trocar para fazer toda essa busca pelo próprio banco de dados
     const resumoRelatosPorGenero = async () => {
@@ -89,7 +113,6 @@ const CadastrarRelato = async (Relato) =>{
             }
             
             const fields = [
-                'nomePessoa',
                 'idadePessoa',
                 'racaPessoa',
                 'generoPessoa',
@@ -97,8 +120,9 @@ const CadastrarRelato = async (Relato) =>{
                 'localRelato',
                 'ufRelato',
                 'cidadeRelato',
+                'aconteceuComigo',
                 'agressaoFisica',
-                'aconteceuComigo'
+                'casoPolicial'
             ];
             const opts = {fields};
 
@@ -114,6 +138,6 @@ const CadastrarRelato = async (Relato) =>{
     }
 
 
-module.exports = { todosRelatos, CadastrarRelato, resumoRelatosPorGenero, downloadCsv};
+module.exports = { todosRelatos, CadastrarRelato, resumoRelatosPorGenero, downloadCsv, atualizarTextoRelatos};
 
 

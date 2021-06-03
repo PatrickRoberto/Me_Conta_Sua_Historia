@@ -2,15 +2,16 @@ import React, { Component } from "react";
 import Contador from "../components/Contadores/Contador";
 import GraficoBarras from "../components/Graficos/GraficoBarras";
 import GraficoBarrasDeitado from "../components/Graficos/GraficoBarrasDeitado";
-//import TabelaGrafico from '../components/Graficos/TableGrafico';
 
 import FilterArea from "../components/Filters/FilterArea";
 import SelectFilter from "../components/Filters/SelectFilter";
 
 import * as GraficosControle from "../Service/GraficosControle";
 
-import { RecuperarRelatos, DownloadDadosCsv } from "../Service/Service";
+import { RecuperarRelatos, DownloadDadosCsv } from "../Service/ServiceRelato";
 import { generos, estados } from "../Help/Dominios";
+import TabelaGrafico from "../components/Graficos/TableGrafico";
+//import { downloadCsv } from "../Help/DownloadCsv"
 
 export default class DadosPage extends Component {
   constructor(props) {
@@ -20,10 +21,12 @@ export default class DadosPage extends Component {
       RelatosResumo: [],
       graph1: {},
       graph2: {},
+      graph3: {},
+      graph4: [],
       filters: [],
       qtdRelatos: 0,
       qtdAgressoesFisicas: 0,
-      //tableCitys: {}
+      qtdCasosPoliciais: 0,
     };
   }
 
@@ -43,24 +46,32 @@ export default class DadosPage extends Component {
       const graficoFaixaEtaria = GraficosControle.faixaEtaria(
         this.state.RelatosResumo
       );
-      const graficoPorGenero = GraficosControle.distribuicaoGeneros(
+      const graficoPorGenero = await GraficosControle.distribuicaoGeneros(
         this.state.RelatosResumo
       );
+
+    const graficoPorLocal = await GraficosControle.distribuicaoLocais(this.state.RelatosResumo)   
+
+
       const qtdRelatos = GraficosControle.QtdRelatos(this.state.RelatosResumo);
-      const qtdAgressoes = GraficosControle.QtdAgressoesFisicas(
-        this.state.RelatosResumo
-      );
-      //const tableCitys = distribuicaoPorCidadeTabela();
+      const qtdAgressoes = GraficosControle.QtdAgressoesFisicas(this.state.RelatosResumo);
+      const qtdPoliciais = GraficosControle.QtdCasosPoliciais(this.state.RelatosResumo)
+
+      const grafifcoPorCidade = await GraficosControle.distribuicaoPorCidadeTabela(this.state.RelatosResumo)
+
 
       this.setState({ graph1: graficoFaixaEtaria });
       this.setState({ graph2: graficoPorGenero });
+      this.setState({ graph3: graficoPorLocal });
+      this.setState({ graph4: grafifcoPorCidade });
       this.setState({ filters: filters });
       this.setState({ qtdRelatos: qtdRelatos });
       this.setState({ qtdAgressoesFisicas: qtdAgressoes });
+      this.setState({ qtdCasosPoliciais: qtdPoliciais });
+      
 
-      //this.setState({tableCitys: tableCitys});
     } catch (error) {
-      console.log("Deu ruim");
+      console.log("Deu ruim", error);
     }
   }
 
@@ -77,6 +88,7 @@ export default class DadosPage extends Component {
 
   async filtraValuesToShow() {
     const { filters, Relatos } = this.state;
+
     const dados = Relatos.filter((relato) => {
       let filtered = true;
       for (let filter of filters) {
@@ -88,19 +100,27 @@ export default class DadosPage extends Component {
     });
 
     await this.setState({ RelatosResumo: dados });
-    const graficoFaixaEtaria = GraficosControle.faixaEtaria(dados);
-    const graficoPorGenero = GraficosControle.distribuicaoGeneros(
-      this.state.RelatosResumo
-    );
 
-    const qtdRelatos = GraficosControle.QtdRelatos(dados);
-    const qtdAgressoes = GraficosControle.QtdAgressoesFisicas(dados);
+    const graficoFaixaEtaria = await GraficosControle.faixaEtaria(this.state.RelatosResumo);
+
+    const graficoPorGenero = await GraficosControle.distribuicaoGeneros(this.state.RelatosResumo);
+
+    const graficoPorLocal = await GraficosControle.distribuicaoLocais(this.state.RelatosResumo);
+
+    const grafifcoPorCidade = await GraficosControle.distribuicaoPorCidadeTabela(this.state.RelatosResumo)
+
+    const qtdRelatos = GraficosControle.QtdRelatos(this.state.RelatosResumo);
+    const qtdAgressoes = GraficosControle.QtdAgressoesFisicas(this.state.RelatosResumo);
+    const qtdPoliciais = GraficosControle.QtdCasosPoliciais(this.state.RelatosResumo)
 
     this.setState({
       graph1: graficoFaixaEtaria,
       graph2: graficoPorGenero,
+      graph3: graficoPorLocal,
+      graph4: grafifcoPorCidade,
       qtdRelatos: qtdRelatos,
       qtdAgressoesFisicas: qtdAgressoes,
+      qtdCasosPoliciais: qtdPoliciais
     });
     //this.setState({qtdRelatos: qtdRelatos});
     //this.setState({qtdAgressoesFisicas: qtdAgressoes});
@@ -111,8 +131,12 @@ export default class DadosPage extends Component {
       [this.state.filters[0].filterName]: this.state.filters[0].value,
       [this.state.filters[1].filterName]: this.state.filters[1].value
     }
-    console.log(filter)
     await DownloadDadosCsv(filter);
+    
+
+/*    const x = await downloadCsv(this.state.RelatosResumo)
+    await window
+    */
   }
 
   render() {
@@ -138,9 +162,17 @@ export default class DadosPage extends Component {
               this.Filtered(a, b);
             }}
           />
+
         </FilterArea>
 
         <div style={STYLE_BOX} className="row">
+        <button  
+            className="waves-effect grey darken-1 btn"
+            style={{ fontSize: "0.9em", height:"5em", lineHeight: '2', width:"12em" }} 
+            onClick={(e) => this.downloadCsv(e)}>
+            Download dos dados
+          </button>
+          
           <Contador
             value={this.state.qtdRelatos}
             texto="Quantidade de Relatos"
@@ -149,23 +181,40 @@ export default class DadosPage extends Component {
             value={this.state.qtdAgressoesFisicas}
             texto="Agressão Física"
           />
+
+          <Contador
+            value={this.state.qtdCasosPoliciais}
+            texto="Policia Foi acionada"
+          />
+
         </div>
 
-        <div style={{ ...STYLE_BOX, ...STYLE }} className="row">
-          <GraficoBarras values={this.state.graph2} />
-          <GraficoBarrasDeitado values={this.state.graph1} />
+        <div style={{...STYLE }} className="row">
+          <div className="col m4 s12" style={DivGraficoStyle}>
+            < GraficoBarras values={this.state.graph2} />
+          </div>
+          <div className="col m4 s12" style={DivGraficoStyle}>
+            <GraficoBarrasDeitado values={this.state.graph1} />
+          </div>
+          <div className="col m4 s12" style={DivGraficoStyle}>
+            <GraficoBarras values={this.state.graph3} />
+          </div>
+          <div className="col m4 s12">
+            <TabelaGrafico values={this.state.graph4}/>
+          </div>
+          
+  
+          
+         
         </div>
 
-        <button  
-          className="waves-effect grey darken-1 btn"
-          style={{ fontSize: "0.9em", height:"5em", lineHeight: '2', width:"12em" }} 
-          onClick={(e) => this.downloadCsv(e)}>
-          Download dos dados
-        </button>
+
+
       </div>
     );
   }
 }
+
 
 const STYLE_BOX = {
   display: "flex",
@@ -180,3 +229,7 @@ const STYLE = {
   minHeight: "250px",
   padding: "10px",
 };
+
+const DivGraficoStyle = {
+  marginBottom: '25px'
+}

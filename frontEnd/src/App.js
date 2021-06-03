@@ -12,7 +12,7 @@ export default function App({children}){
         <div>
           {children}
         </div>
-        <Footer >Teste</Footer>
+        <Footer />
       </div> 
     );
   

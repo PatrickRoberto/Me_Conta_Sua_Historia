@@ -24,6 +24,11 @@ export default function SelectFilter(props) {
                     name={name}>
                     <option value=""></option>
                         {opcoes.map((opcao) => {
+                            if(opcao.ID_REF)
+                                return (
+                                    <option key={opcao.ID_REF} value={opcao.ID_REF}>{opcao.TEXTO}</option>
+                                )
+                            else
                             return (
                                 <option key={opcao} value={opcao}>{opcao}</option>
                             )

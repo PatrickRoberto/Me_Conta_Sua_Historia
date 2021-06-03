@@ -8,7 +8,7 @@ import "./index.css";
 // };
 
 var phantom = {
-  display: "block",
+  //display: "block",
   padding: "30px",
   height: "100px",
   width: "100%",
@@ -22,8 +22,7 @@ function Footer({ children }) {
       <div className="black-white-text">
         Trabalho de Conclusão do Curso de Sistemas de Informação da PUC Minas{" "}
         <br />
-        Autor: Patrick Roberto dos Santos <br />
-        2020
+        Autor: Patrick Roberto dos Santos 01/2021
       </div>
     </div>
   );

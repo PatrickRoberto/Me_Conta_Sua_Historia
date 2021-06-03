@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import Conteudo from '../components/Conteudo/Conteudo';
 import Graficos from '../components/Conteudo/Graficos';
-import Relatos from '../components/Relatos/Relatos';
+//import Relatos from '../components/Relatos/Relatos';
 
-import {RecuperarRelatos} from '../Service/Service'
+import {RecuperarRelatos} from '../Service/ServiceRelato'
 
 
 
@@ -63,8 +63,6 @@ class Home extends Component {
                       </div>
                       
                   </div>
-
-                  <Relatos relatos={this.state.RelatosResumo} width='100%'/>
                   
                 </div>
 

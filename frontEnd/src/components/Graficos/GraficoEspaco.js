@@ -3,7 +3,7 @@ import GraficoBarros from './GraficoBarras'
 import GraficoBarrasDeitado from './GraficoBarrasDeitado'
 
 import * as GraficosControle from "../../Service/GraficosControle";
-import { RecuperarRelatos } from "../../Service/Service";
+import { RecuperarRelatos } from "../../Service/ServiceRelato";
 
 class GraficoEspaco extends Component {
     
@@ -24,7 +24,7 @@ class GraficoEspaco extends Component {
           const graficoFaixaEtaria = GraficosControle.faixaEtaria(
             this.state.relatos
           );
-          const graficoPorGenero = GraficosControle.distribuicaoGeneros(
+          const graficoPorGenero = await GraficosControle.distribuicaoGeneros(
             this.state.relatos
           );
 
